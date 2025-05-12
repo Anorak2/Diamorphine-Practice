@@ -22,32 +22,30 @@ int main() {
     printf("Press any key to fork a child process...\n");
     input = getchar();  // Wait for any input from the user
 
-    // Fork the child process
     pid = fork();
 
     if (pid < 0) {
-        // If fork failed
         perror("fork failed");
         exit(1);
     }
 
     if (pid == 0) {
-        // Child process
         printf("Child process started.\n");
 
-        // First, wait for 25 seconds before sending signal 31 to itself
-        printf("Child will wait 25 seconds before sending signal 31...\n");
-        sleep(25);
-
-        // Send signal 31 to itself
-        printf("Sending signal 31 to itself...\n");
-        kill(getpid(), 31);
-
-        // Wait for another 15 seconds before terminating
-        printf("Child will now wait 15 seconds before terminating...\n");
+        printf("Child will wait before sending signal 31...\n");
         sleep(15);
 
-        // Child process terminates
+        printf("Child is going invisible\n");
+        kill(getpid(), 31);
+
+        printf("Child will now wait before becoming visible again\n");
+        sleep(15);
+
+        kill(getpid(), 31);
+
+        printf("Child will now wait before terminating\n");
+        sleep(15);
+
         printf("Child process terminating.\n");
         exit(0);
     } else {
